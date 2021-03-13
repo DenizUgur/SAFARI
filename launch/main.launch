@@ -1,0 +1,15 @@
+<launch>
+    <!-- Connect map to base_link -->
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 1 map odom 100" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="../config/ros/ekf_params.yaml" />
+        <remap from="odometry/filtered" to="/odometry/filtered"/>
+    </node>
+
+    <!-- Launch elevation mapping node. -->
+    <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+        <rosparam command="load" file="../config/ros/elevation_mapping.yaml" />
+        <rosparam command="load" file="$(find elevation_mapping)/config/sensor_processors/perfect.yaml" />
+    </node>
+</launch>

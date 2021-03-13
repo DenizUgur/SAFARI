@@ -1,0 +1,4 @@
+odometry_topic: /odometry/filtered
+cmd_topic: /cmd_vel
+goal_topic: /move_base_simple/goal
+local_size: 10.0
