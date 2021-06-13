@@ -177,5 +177,6 @@ dmypy.json
 # Start of custom
 
 .vscode/
+*.pt
 
 # End of custom
