@@ -8,6 +8,7 @@ def callback(msg):
     new_msg.header.stamp = msg.header.stamp
     new_msg.header.frame_id = msg.child_frame_id
     new_msg.pose = msg.pose
+    new_msg.pose.covariance = [0] * 36
 
     pub.publish(new_msg)
 
