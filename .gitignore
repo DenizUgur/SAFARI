@@ -178,5 +178,7 @@ dmypy.json
 
 .vscode/
 *.pt
+*.obj
+*.sh
 
 # End of custom
