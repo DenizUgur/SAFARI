@@ -1,7 +1,6 @@
 import heapq
 import numpy as np
 from math import hypot
-import scipy.interpolate as interpolate
 
 from .rdp import *
 
