@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -41,9 +43,9 @@ jobs:
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
             --platform linux/arm64,linux/amd64 \
             --output "type=image,push=true" \
-            --tag ghcr.io/denizugur/safari:${{ github.sha }} \
+            --tag ghcr.io/denizugur/safari:latest \
             --file ./Dockerfile ./
 
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ghcr.io/denizugur/safari:${{ github.sha }}
+          docker buildx imagetools inspect ghcr.io/denizugur/safari:latest
