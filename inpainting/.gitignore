@@ -1,0 +1,11 @@
+__pycache__
+*.pt 
+*.txt 
+*.png
+*.npy
+test.py
+events.* 
+outputs
+wandb/
+src/data/download
+src/data/tmp

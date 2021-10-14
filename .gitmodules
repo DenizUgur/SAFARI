@@ -1,3 +1,0 @@
-[submodule "inpainting"]
-	path = inpainting
-	url = https://github.com/DenizUgur/AOT-GAN-for-Inpainting
