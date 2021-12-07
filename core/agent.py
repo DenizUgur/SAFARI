@@ -23,10 +23,15 @@ class Agent:
         transform,
         agent_extent_bias="inverse_diagonal",
         recalculate_threshold=0.2,
+        collect_debug_info=False
     ) -> None:
         self.start = (*start, world[start[1], start[0]])
         self.goal = (*goal, world[goal[1], goal[0]])
         self.goal_in_sight = False
+        
+        # * Debug related
+        self.debug_info = dict()
+        self.collect_debug_info = collect_debug_info
 
         # * Map related
         self.local_size = local_size
@@ -56,6 +61,8 @@ class Agent:
 
         # * Observe
         dem = self.__observe(poly)
+        if self.collect_debug_info:
+            self.debug_info["last_dem"] = np.copy(dem)
 
         if self.mess is None:
             self.mess = MESS()
@@ -98,12 +105,22 @@ class Agent:
         return path
 
     def get_poly(self):
-        return self.__calc_poly()
+        return self.mess.polygon if self.mess else None, self.__calc_poly()
+
+    def get_debug_info(self):
+        return self.debug_info
 
     def __observe(self, poly):
         logger.info("Calculating current observation")
         extent = Conversion.poly_to_extent(poly)
-        position = (self.position[0] - extent[2], self.position[1] - extent[0])
+
+        c_x = self.position[0]
+        c_y = self.position[1]
+        p_x = self.previous_position[0]
+        p_y = self.previous_position[1]
+        a = math.atan2(c_y - p_y, c_x - p_x)
+
+        position = (self.position[0] - extent[2], self.position[1] - extent[0], a)
         dem = self.world[extent[2] : extent[3], extent[0] : extent[1]]
         return self.transform(position, dem)
 
